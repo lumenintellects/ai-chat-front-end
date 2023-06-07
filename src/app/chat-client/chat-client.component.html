@@ -1,13 +1,20 @@
 <div class="chat-container">
-  <div class="chat-header">Chat RFP</div>
-  <div class="chat-messages">
-    <div *ngFor="let message of messages" class="chat-message">
-      {{ message }}
-    </div>
+  <div *ngFor="let message of messages" class="chat-message">
+    <div class="question">{{ message.question }}</div>
+    <div class="answer">{{ message.answer }}</div>
   </div>
-  <div class="chat-input">
-    <input type="text" [(ngModel)]="inputText" placeholder="Send a message" />
-    <button (click)="sendQuery()">Send</button>
+
+  <div class="answer" *ngIf="isLoading">
+    <span>Loading...</span>
   </div>
-  <div class="loader" *ngIf="isLoading"></div>
+
+  <div class="input-field">
+    <input
+      type="text"
+      [(ngModel)]="inputText"
+      (keyup.enter)="submitRequest()"
+      placeholder="Enter your question"
+    />
+    <button class="button" (click)="submitRequest()">Send</button>
+  </div>
 </div>
