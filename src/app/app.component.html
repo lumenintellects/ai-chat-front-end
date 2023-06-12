@@ -1,25 +1,8 @@
 <div class="container">
   <h1 class="chat-rfp-label">Chat RFP</h1>
-
-  <div *ngIf="messages.length > 0" class="chat-messages">
-    <div *ngFor="let message of messages" class="chat-message">
-      <div class="question">{{ message.question }}</div>
-      <div class="answer">{{ message.answer }}</div>
-    </div>
-  </div>
-
-  <div class="answer" *ngIf="loading">
-    <span>Loading...</span>
-  </div>
-
-  <div class="input-field">
-    <input
-      type="text"
-      [(ngModel)]="inputText"
-      (keyup.enter)="submitRequest()"
-      placeholder="Enter your question"
-    />
-    <button class="button" (click)="submitRequest()">Send</button>
-  </div>
-
+  <app-chat-client
+    [isLoading]="loading"
+    [messages]="messages"
+    (onSend)="submitRequest($event)">
+  </app-chat-client>
 </div>

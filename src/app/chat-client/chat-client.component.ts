@@ -1,37 +1,26 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+
+export interface Message {
+  question: string;
+  answer: string;
+}
 
 @Component({
   selector: 'app-chat-client',
   templateUrl: './chat-client.component.html',
-  styleUrls: ['./chat-client.component.css']
+  styleUrls: ['./chat-client.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatClientComponent {
-  inputText = '';
-  messages: string[] = [];
-  isLoading = false;
 
-  constructor(private http: HttpClient) {}
+  @Input() messages: Message[] = [];
+  @Input() isLoading = false;
+  @Output() onSend = new EventEmitter<string>();
+  public inputText = '';
 
-  sendQuery() {
-    const query = this.inputText.trim();
-    if (query === '') {
-      return;
-    }
+  constructor() {}
 
-    this.isLoading = true;
-    const url = `http://localhost:8000/answer?query=${encodeURIComponent(query)}`;
-    this.http.get(url).subscribe(
-      (response: any) => {
-        this.isLoading = false;
-        this.messages.push(query);
-        this.messages.push(response.answer);
-        this.inputText = '';
-      },
-      (error) => {
-        this.isLoading = false;
-        console.error('An error occurred:', error);
-      }
-    );
+  public submitRequest() {
+    this.onSend.emit(this.inputText.trim());
   }
 }
