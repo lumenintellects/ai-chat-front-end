@@ -16,12 +16,14 @@ export class ChatHttpServiceService {
   }
 
   public getAnswers(question: string): Observable<AnswerMsg> {
-    return this.http.get<AnswerDtoInterface>(`${GET_ANSWER}?query=${encodeURIComponent(question)}`)
-      .pipe(
-        map(({ answer }) => new AnswerMsg({ answer, question }))
-      );
-
-    // return of({answer: 'I\'m sorry, I don\'t have enough context to answer your question accurately. Could you please provide me with more information about the situation?'})
-    //   .pipe(delay(1500), map(({ answer }) => new AnswerMsg({ answer, question })));
+    return this.http.get<AnswerDtoInterface>(`${GET_ANSWER}?query=${encodeURIComponent(question)}`).pipe(
+        map((response: AnswerDtoInterface) => {
+          const answerMsg: AnswerMsg = new AnswerMsg({
+            answer: response.answer,
+            documents: response.documents,
+          });
+          return answerMsg;
+        })
+    );
   }
 }

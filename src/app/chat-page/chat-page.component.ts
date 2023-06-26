@@ -32,7 +32,7 @@ export class ChatPageComponent {
       .subscribe((data) => {
         this.messages = [...this.messages, data];
         this.loading = false;
-        // this.cdr.detectChanges(); // should be deleted after HTTP service implementation
+        this.cdr.detectChanges(); // should be deleted after HTTP service implementation
       })
   }
 }
