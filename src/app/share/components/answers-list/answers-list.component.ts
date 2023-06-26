@@ -24,4 +24,7 @@ export class AnswersListComponent {
     this.onSend.emit(this.inputText.trim());
   }
 
+  public toggleDocuments(message: AnswerMsg): void {
+    message.showDocuments = !message.showDocuments;
+  }
 }

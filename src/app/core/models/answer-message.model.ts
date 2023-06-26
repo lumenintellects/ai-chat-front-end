@@ -1,9 +1,21 @@
 export class AnswerMsg {
   public question = '';
   public answer = '';
-  public documents = '';
+  public documents: Document[] = [];
+  public showDocuments = false; // Add showDocuments property
 
-  constructor(init: { answer: string; question: string; documents: string }) {
+  constructor(init: Partial<AnswerMsg>) {
     Object.assign(this, init);
   }
+
+}
+
+export interface Document {
+  question: string;
+  answer: string;
+  date: string;
+  metadata: {
+    source: string;
+    row: number;
+  };
 }
