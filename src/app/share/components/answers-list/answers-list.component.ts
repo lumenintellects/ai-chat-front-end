@@ -23,4 +23,5 @@ export class AnswersListComponent {
   public submitRequest() {
     this.onSend.emit(this.inputText.trim());
   }
+
 }

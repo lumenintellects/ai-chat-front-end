@@ -6,6 +6,8 @@ import {AnswersListComponent} from "@shared/components";
 import {delay, of} from "rxjs";
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ChatHttpServiceService } from '@shared/services';
+import { MatDialog } from '@angular/material/dialog';
+import {PopupComponent} from "@shared/components";
 
 @UntilDestroy()
 @Component({
@@ -20,7 +22,7 @@ export class ChatPageComponent {
   loading: boolean = false;
   messages: AnswerMsg[] = [];
 
-  constructor(private httpService: ChatHttpServiceService, private cdr: ChangeDetectorRef) {}
+  constructor(private httpService: ChatHttpServiceService, private cdr: ChangeDetectorRef, private dialog: MatDialog) {}
 
   public submitRequest(inputText: string): void {
     if (!inputText) {
@@ -35,4 +37,12 @@ export class ChatPageComponent {
         // this.cdr.detectChanges(); // should be deleted after HTTP service implementation
       })
   }
+
+  public openPopup() {
+    const dialogRef = this.dialog.open(PopupComponent, {
+      width: '400px',
+      data: 'documents',
+    });
+  }
+
 }
